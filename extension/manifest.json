@@ -1,0 +1,10 @@
+{
+    "manifest_version": 3,
+    "name": "yt-extension",
+    "description": "Summirize youtube comments",
+    "version": "1.0",
+    "action": {
+        "default_popup":"./components/popup.html",
+        "default_icon":"./assets/poupicon.png"
+    }
+}
