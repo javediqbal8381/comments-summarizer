@@ -1,0 +1,78 @@
+const CopyPlugin = require("copy-webpack-plugin");
+
+const path = require("path");
+
+module.exports = {
+  entry: "./src/main.jsx",
+  mode: "production",
+  module: {
+    rules: [
+      {
+        test: /\.jsx?$/,
+        use: [
+          {
+            loader: "babel-loader",
+            options: {
+              presets: ["@babel/preset-env", "@babel/preset-react"],
+            },
+          },
+        ],
+        exclude: /node_modules/,
+      },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
+      },
+      {
+        test: /\.svg$/,
+        use: ['@svgr/webpack', 'url-loader'],
+      },
+      {
+        test: /\.(png|jpe?g|gif)$/i,
+        use: [
+          {
+            loader: 'file-loader',
+          },
+        ],
+      },
+    ],
+  },
+  plugins: [
+    new CopyPlugin({
+      patterns: [
+        {
+          from: path.resolve(__dirname, 'src/extension/components'),
+          to: path.resolve(__dirname, "..", "extension/components")
+        },
+        {
+          from: path.resolve(__dirname, 'src/extension/icons'),
+          to: path.resolve(__dirname, "..", "extension/icons")
+        },
+        {
+          from: path.resolve(__dirname, 'src/extension/images'),
+          to: path.resolve(__dirname, "..", "extension/images")
+        },
+        {
+          from: path.resolve(__dirname, 'src/extension/packages'),
+          to: path.resolve(__dirname, "..", "extension/packages")
+        },
+        {
+          from: path.resolve(__dirname, 'src/extension/scripts'),
+          to: path.resolve(__dirname, "..", "extension")
+        },
+        {
+          from: path.resolve(__dirname, 'README.md'),
+          to: path.resolve(__dirname, "..", "extension")
+        },
+      ],
+    }),
+  ],
+  resolve: {
+    modules: ['node_modules', 'src'],
+    extensions: ['.js', '.jsx', '.json'],
+  },
+  output: {
+    filename: "content.js",
+    path: path.resolve(__dirname, "..", "extension/scripts"),
+  },
+};

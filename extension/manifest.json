@@ -4,15 +4,24 @@
     "description": "Summirize youtube comments",
     "version": "1.0",
     "action": {
-        "default_popup":"./components/popup.html",
-        "default_icon":"./assets/poupicon.png"
+        "default_popup": "./components/popup.html",
+        "default_icon": "./assets/poupicon.png"
     },
     "content_scripts": [
         {
-            "js": ["./scripts/content-scripts.js"],
+            "js": [
+                "./scripts/content-scripts.js"
+            ],
             "matches": [
-                ""
+                "https://www.youtube.com/"
             ]
         }
+    ],
+    "background": {
+        "service_worker": "./service-worker.js"
+    },
+    "permissions": [
+        "activeTab",
+        "storage"
     ]
 }
